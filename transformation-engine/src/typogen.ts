@@ -32,7 +32,7 @@ const typos = {
 };
 const CHANCE_OF_TYPO = 0.25;
 
-const typo = (inputChar: string) => {
+export const typo = (inputChar: string) => {
   if (!(inputChar in typos)) return;
 
   const buzzista = drawUniform();

@@ -27,6 +27,17 @@ const typos = {
   x: 'zsdc',
   y: 'tghu',
   z: 'asx',
+  1: 'qw§23',
+  2: '1wqe34',
+  3: '24wer',
+  4: 'r34t5',
+  5: 't4t54yt',
+  6: 'tytu67y5t',
+  7: 'uuiu678u',
+  8: 'oiu700',
+  9: 'oip80i0',
+  0: 'p+0å+o',
+  '+': 'åp¨åp0',
   ' ': ' ',
 }
 const CHANCE_OF_TYPO = 0.33
@@ -36,7 +47,10 @@ export const generateTypo = (inputChar: string) => {
 
   const buzzista = Math.random()
   if (buzzista <= CHANCE_OF_TYPO) {
-    const returnableTypo = sample([...typos[inputChar]], sample([1, 2], 1))
+    const returnableTypo = sample(
+      [...new Set([...typos[inputChar]])],
+      sample([1, 2], 1)
+    )
     return returnableTypo
   }
   return [inputChar]

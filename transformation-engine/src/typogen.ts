@@ -1,4 +1,4 @@
-import take from 'lodash.take'
+import sample from 'lodash.samplesize'
 
 const typos = {
   a: 'qwsz',
@@ -29,14 +29,15 @@ const typos = {
   z: 'asx',
   ' ': ' ',
 }
-const CHANCE_OF_TYPO = 0.25
+const CHANCE_OF_TYPO = 0.99
 
 export const generateTypo = (inputChar: string) => {
-  if (!(inputChar in typos)) return
+  if (!(inputChar in typos)) return [inputChar]
 
   const buzzista = Math.random()
   if (buzzista <= CHANCE_OF_TYPO) {
-    return take(typos[inputChar], take([0, 1, 2], 1).pop())
+    const returnableTypo = sample([...typos[inputChar]], sample([1, 2], 1))
+    return returnableTypo
   }
   return [inputChar]
 }

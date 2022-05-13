@@ -1,4 +1,3 @@
-import { drawUniform } from "./util";
 import take from "lodash.take";
 
 const typos = {
@@ -35,7 +34,7 @@ const CHANCE_OF_TYPO = 0.25;
 export const typo = (inputChar: string) => {
   if (!(inputChar in typos)) return;
 
-  const buzzista = drawUniform();
+  const buzzista = Math.random();
   if (buzzista <= CHANCE_OF_TYPO) {
     return take(typos[inputChar], take([0, 1, 2], 1).pop());
   }

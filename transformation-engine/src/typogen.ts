@@ -38,4 +38,5 @@ export const generateTypo = (inputChar: string) => {
   if (buzzista <= CHANCE_OF_TYPO) {
     return take(typos[inputChar], take([0, 1, 2], 1).pop())
   }
+  return [inputChar]
 }

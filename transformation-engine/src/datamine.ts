@@ -9,7 +9,7 @@ const lastNamesJson = JSON.parse(
 )
 
 type DataMineResult = {
-  type: 'firstName' | 'lastName' |'email' |'creditCard',
+  type: 'firstName' | 'lastName' | 'email' | 'creditCard'
   value: string
 }
 
@@ -33,19 +33,17 @@ export const datamine = (chars: string[]): DataMineResult[] => {
   const email = stringistä.match(
     /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g
   )
-  if (email.length > 0) {
+  if (email && email.length > 0) {
     email.forEach(e => {
-      goldista.push({ type: 'email', value: e[0] })
+      goldista.push({ type: 'email', value: e })
     })
   }
 
   const cc = stringistä.match(
     /^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/g
   )
-  if (cc.length > 0) {
-    cc.forEach(c => {
-      goldista.push({ type: 'creditCard', value: c[0] })
-    })
+  if (cc && cc[0].length === 16) {
+    goldista.push({ type: 'creditCard', value: cc[0] })
   }
 
   return goldista

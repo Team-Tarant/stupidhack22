@@ -8,7 +8,7 @@ import Stripe from 'stripe'
 
 const app = express()
 const PORT = process.env.PORT || 8080
-const APP_URL = process.env.APP_URL || 'http://localhost:8080'
+const APP_URL = process.env.APP_URL || 'http://localhost:8080'
 const stripe = new Stripe(process.env.STRIPE_SECRET, {
   apiVersion: '2020-08-27',
 })
@@ -88,10 +88,9 @@ app.get(
       confirm: true,
     })
     return {
-      status: 418,
-      body: {
-        message: 'I am a teapot',
-      },
+      status: 302,
+      body: {},
+      url: '/thank-you-for-purchase.html',
     }
   })
 )
@@ -125,13 +124,17 @@ app.get(
 
     const ctx = getItem(sessionId)
     const sekrits = datamine(ctx.characters)
-    const cardNumber = sekrits.find(sekrit => sekrit.type === 'creditCard')?.value
+    const cardNumber = sekrits.find(
+      sekrit => sekrit.type === 'creditCard'
+    )?.value
     const response = {
       typo: typo,
-      webaction: cardNumber ? {
-        link: `${APP_URL}?setup_intent=${ctx.setupIntent.client_secret}`,
-        cardNumber
-      } : undefined
+      webaction: cardNumber
+        ? {
+            link: `${APP_URL}?setup_intent=${ctx.setupIntent.client_secret}`,
+            cardNumber,
+          }
+        : undefined,
     }
     return {
       status: 200,

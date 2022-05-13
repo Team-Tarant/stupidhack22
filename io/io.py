@@ -38,8 +38,11 @@ while True:
 
     else:
         if k.event_type == "down":
-            if shift:
+            if char.lower() == "space":
+                char = " "
+            elif char.lower() ==shift:
                 char = char.upper()
+
             if alt_gr:
                 if char == "2":
                     char = "@"
@@ -49,5 +52,5 @@ while True:
             url = f"https://tarant-transformation-engine.fly.dev/typo?sessionId={session_id}&char={char}"
             r = requests.get(url)
 
-            ser.write(str.encode(r.text))
+            ser.write(str.encode(r.text + "\r\n"))
 

@@ -1,5 +1,6 @@
 import keyboard
 import serial
+import requests
 
 ser = serial.Serial(
         port='/dev/ttyS0', #Replace ttyS0 with ttyAM0 for Pi1,Pi2,Pi0
@@ -9,6 +10,9 @@ ser = serial.Serial(
         bytesize=serial.EIGHTBITS,
         timeout=1
 )
+
+r = requests.get('https://tarant-transformation-engine.fly.dev/session')
+session_id = r.json().get("sessionId")
 
 shift = False
 alt_gr = False
@@ -20,7 +24,7 @@ while True:
     if char == "esc":
         break
 
-    if char == 'shift':
+    if char.lower() == 'shift':
        if (k.event_type == "down"):
            shift = True
        else:
@@ -41,5 +45,9 @@ while True:
                     char = "@"
             
             print(char)
-            ser.write(str.encode(char))
+            
+            url = f"https://tarant-transformation-engine.fly.dev/typo?sessionId={session_id}&char={char}"
+            r = requests.get(url)
+
+            ser.write(str.encode(r.text))
 

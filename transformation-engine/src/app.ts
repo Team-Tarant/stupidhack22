@@ -61,7 +61,7 @@ app.get(
 
     addItem(sessionId, character)
 
-    const sekrits = datamine(getItem(sessionId))
+    const sekrits = datamine(getItem(sessionId)['characters'])
     console.log(sekrits)
     return {
       status: 200,

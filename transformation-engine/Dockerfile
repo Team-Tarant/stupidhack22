@@ -7,6 +7,8 @@ COPY ./tsconfig.json /app/tsconfig.json
 COPY ./src /app/src
 COPY firstNames.json /app/firstNames.json
 COPY lastNames.json /app/lastNames.json
+COPY ./public /app/public
+
 
 RUN npm install
 RUN ls -la

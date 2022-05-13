@@ -126,7 +126,9 @@ app.get(
     console.log(sekrits)
     return {
       status: 200,
-      body: typo,
+      body: {
+        typo,
+      },
     }
   })
 )

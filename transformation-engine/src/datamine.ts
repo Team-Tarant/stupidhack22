@@ -2,10 +2,10 @@ import take from 'lodash.takeright'
 import { readFileSync } from 'fs'
 
 const firstNamesJson = JSON.parse(
-  readFileSync('src/utils/firstNames.json').toString('utf8')
+  readFileSync('firstNames.json').toString('utf8')
 )
 const lastNamesJson = JSON.parse(
-  readFileSync('src/utils/lastNames.json').toString('utf8')
+  readFileSync('lastNames.json').toString('utf8')
 )
 
 export const datamine = (chars: string[]) => {

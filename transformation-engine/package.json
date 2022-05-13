@@ -24,6 +24,6 @@
   },
   "scripts": {
     "dev": "ts-node ./src/app.ts",
-    "build": "tsc && mkdir -p ./dist/src/utils/ && cp ./src/utils/firstNames.json ./dist/src/utils/firstNames.json && cp ./src/utils/lastNames.json ./build/src/utils/lastNames.json"
+    "build": "tsc"
   }
 }

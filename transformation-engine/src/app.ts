@@ -2,7 +2,7 @@ import express from 'express'
 import { handleRequest } from './utils/request-handler'
 import { v4 } from 'uuid'
 import { generateTypo } from './typogen'
-import {setItem} from './context-store'
+import {initSession, addItem, exists} from './context-store'
 
 const app = express()
 const PORT = process.env.PORT || 8080
@@ -23,6 +23,7 @@ app.get(
   '/session',
   handleRequest(async req => {
     const sid = v4()
+    initSession(sid)
     return {
       status: 200,
       body: {
@@ -49,7 +50,7 @@ app.get(
 
     const typo = generateTypo(character)
 
-    if (!sessionId) {
+    if (!sessionId || !exists(sessionId)) {
       return {
         status: 401,
         body: {
@@ -58,7 +59,7 @@ app.get(
       }
     }
 
-    setItem(sessionId, character)
+    addItem(sessionId, character)
 
     return {
       status: 200,

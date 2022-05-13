@@ -3,10 +3,17 @@ type CtxStore = Record<string, string[]>
 
 let ctxStore: CtxStore = {}
 
-export const setItem = (sessionId: string, c: string) => {
+export const initSession = (sessionId: string) => {
+  ctxStore[sessionId] = []
+}
+
+export const addItem = (sessionId: string, c: string) => {
   ctxStore[sessionId] = !ctxStore[sessionId] ? [c] : [...ctxStore[sessionId], c]
 }
 
 export const getItem = (sessionId: string) =>
   ctxStore[sessionId] ?? null
+
+export const exists = (sessionId: string) => 
+  ctxStore[sessionId] ? true : false
 

@@ -31,14 +31,17 @@ app.get(
   })
 )
 
-app.get('/typo', async req => {
-  const typo = generateTypo(req.query?.char?.toString())
-  return {
-    status: 200,
-    body: {
-      typo,
-    },
-  }
-})
+app.get(
+  '/typo',
+  handleRequest(async req => {
+    const typo = generateTypo(req.query?.char?.toString())
+    return {
+      status: 200,
+      body: {
+        typo,
+      },
+    }
+  })
+)
 
 app.listen(PORT, () => console.log('App listening on', PORT))

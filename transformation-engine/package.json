@@ -1,0 +1,13 @@
+{
+  "name": "transformation-engine",
+  "private": true,
+  "dependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^17.0.33",
+    "axios": "^0.27.2",
+    "express": "^4.18.1",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.4",
+    "zod": "^3.16.0"
+  }
+}

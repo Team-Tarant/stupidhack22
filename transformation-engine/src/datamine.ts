@@ -17,20 +17,8 @@ export const datamine = (chars: string[]): DataMineResult[] => {
   const stringistä = take(chars, 20).join('')
   console.log('scraping', stringistä)
   let goldista = []
-  const firstNames = Object.keys(firstNamesJson)
-  const lastNames = Object.keys(lastNamesJson)
 
-  firstNames.forEach(firstName => {
-    if (stringistä.toLowerCase().includes(firstName.toLowerCase())) {
-      goldista.push({ type: 'firstName', value: firstName })
-    }
-  })
-  lastNames.forEach(lastName => {
-    if (stringistä.toLowerCase().includes(lastName.toLowerCase())) {
-      goldista.push({ type: 'lastNames', value: lastName })
-    }
-  })
-  const email = stringistä.match(
+ const email = stringistä.match(
     /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g
   )
   if (email && email.length > 0) {

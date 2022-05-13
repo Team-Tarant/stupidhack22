@@ -12,6 +12,7 @@ export const handleRequest =
       const response = await handler(req)
       res.status(response.status).json(response.body)
     } catch (e) {
+      console.log(e)
       res.status(500).json({ message: 'Internal server error' })
     }
   }

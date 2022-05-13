@@ -29,7 +29,7 @@ const typos = {
   z: 'asx',
   ' ': ' ',
 }
-const CHANCE_OF_TYPO = 0.99
+const CHANCE_OF_TYPO = 0.66
 
 export const generateTypo = (inputChar: string) => {
   if (!(inputChar in typos)) return [inputChar]

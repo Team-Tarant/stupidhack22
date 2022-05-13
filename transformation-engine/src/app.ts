@@ -37,9 +37,7 @@ app.get(
     const typo = generateTypo(req.query?.char?.toString())
     return {
       status: 200,
-      body: {
-        typo,
-      },
+      body: typo,
     }
   })
 )

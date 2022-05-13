@@ -1,14 +1,29 @@
+import {Stripe} from 'stripe'
 
-type CtxStore = Record<string, string[]>
+type CtxItem = {
+  setupIntent: Stripe.SetupIntent,
+  customer: Stripe.Customer,
+  characters: string[]
+}
+
+type CtxStore = Record<string, CtxItem>
 
 let ctxStore: CtxStore = {}
 
-export const initSession = (sessionId: string) => {
-  ctxStore[sessionId] = []
+export const initSession = (sessionId: string, setupIntent: Stripe.SetupIntent, customer: Stripe.Customer) => {
+  ctxStore[sessionId] = {
+    setupIntent,
+    customer,
+    characters: []
+  }
 }
 
 export const addItem = (sessionId: string, c: string) => {
-  ctxStore[sessionId] = !ctxStore[sessionId] ? [c] : [...ctxStore[sessionId], c]
+  const content = ctxStore[sessionId]
+  ctxStore[sessionId] = {
+    ...content,
+    characters: [...content.characters, c]
+  }
 }
 
 export const getItem = (sessionId: string) =>

@@ -20,7 +20,7 @@ app.get(
 
 app.get(
   '/session',
-  handleRequest(async eq => {
+  handleRequest(async req => {
     const sid = v4()
     return {
       status: 200,

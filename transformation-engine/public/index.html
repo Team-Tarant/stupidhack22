@@ -46,7 +46,7 @@
           //`Elements` instance that was used to create the Payment Element
           elements,
           confirmParams: {
-            return_url: `http://localhost:8080/account/payments/setup-complete`,
+            return_url: `${window.location.origin}/account/payments/setup-complete`,
           },
         })
 

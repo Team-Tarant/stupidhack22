@@ -4,9 +4,15 @@ import { v4 } from 'uuid'
 import { generateTypo } from './typogen'
 import { getItem, addItem, initSession, exists } from './context-store'
 import { datamine } from './datamine'
+import Stripe from 'stripe'
 
 const app = express()
 const PORT = process.env.PORT || 8080
+const stripe = new Stripe(process.env.STRIPE_SECRET, {
+  apiVersion: '2020-08-27',
+})
+
+app.use(express.static('./public'))
 
 app.get(
   '/',
@@ -24,11 +30,66 @@ app.get(
   '/session',
   handleRequest(async req => {
     const sid = v4()
-    initSession(sid)
+    const customer = await stripe.customers.create()
+    const setupIntent = await stripe.setupIntents.create({
+      customer: customer.id,
+    })
+    initSession(sid, setupIntent, customer)
     return {
       status: 200,
       body: {
         sessionId: sid,
+      },
+    }
+  })
+)
+
+app.get(
+  '/session/content',
+  handleRequest(async req => {
+    const sid = req.query?.sessionId?.toString() ?? null
+    if (!sid) {
+      return {
+        status: 401,
+        body: {
+          message: 'no session',
+        },
+      }
+    }
+
+    return {
+      status: 200,
+      body: getItem(sid),
+    }
+  })
+)
+
+app.get(
+  '/account/payments/setup-complete',
+  handleRequest(async req => {
+    const si = req.query?.setup_intent?.toString() ?? null
+    if (!si) {
+      return {
+        status: 400,
+        body: {
+          message: 'Failed to parse shit',
+        },
+      }
+    }
+
+    const intent = await stripe.setupIntents.retrieve(si)
+    await stripe.paymentIntents.create({
+      amount: 6900,
+      currency: 'eur',
+      payment_method: intent.payment_method.toString(),
+      customer: intent.customer.toString(),
+      off_session: true,
+      confirm: true,
+    })
+    return {
+      status: 418,
+      body: {
+        message: 'I am a teapot',
       },
     }
   })
@@ -61,7 +122,7 @@ app.get(
 
     addItem(sessionId, character)
 
-    const sekrits = datamine(getItem(sessionId))
+    const sekrits = datamine(getItem(sessionId).characters)
     console.log(sekrits)
     return {
       status: 200,

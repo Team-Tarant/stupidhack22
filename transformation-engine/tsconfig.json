@@ -12,6 +12,7 @@
     "esModuleInterop": true,
     "outDir": "./dist/",
     "rootDirs": ["src"],
+    "resolveJsonModule": true,
     "lib": ["es6", "dom", "esnext"]
   },
   "exclude": ["/node_modules", "public", "dist"]

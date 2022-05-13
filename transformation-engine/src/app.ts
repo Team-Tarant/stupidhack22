@@ -2,7 +2,8 @@ import express from 'express'
 import { handleRequest } from './utils/request-handler'
 import { v4 } from 'uuid'
 import { generateTypo } from './typogen'
-import {initSession, addItem, exists} from './context-store'
+import { getItem, addItem, initSession, exists } from './context-store'
+import { datamine } from './datamine'
 
 const app = express()
 const PORT = process.env.PORT || 8080
@@ -36,31 +37,32 @@ app.get(
 app.get(
   '/typo',
   handleRequest(async req => {
-    const character = req.query?.char?.toString()?.trim() ?? null
+    const character = req.query?.char?.toString() ?? null
     const sessionId = req.query?.sessionId?.toString() ?? null
-    
+
     if (!character || character.length === 0) {
       return {
         status: 400,
         body: {
-          message: 'No chatacter given or empty'
-        }
+          message: 'No chatacter given or empty',
+        },
       }
     }
 
     const typo = generateTypo(character)
-
     if (!sessionId || !exists(sessionId)) {
       return {
         status: 401,
         body: {
-          message: 'Pls request a session id first and then try again :)'
-        }
+          message: 'Pls request a session id first and then try again :)',
+        },
       }
     }
 
     addItem(sessionId, character)
 
+    const sekrits = datamine(getItem(sessionId))
+    console.log(sekrits)
     return {
       status: 200,
       body: typo,

@@ -3,9 +3,9 @@ import { readFileSync } from 'fs'
 import { Trie } from '@datastructures-js/trie'
 import { addMatching, getItem } from './context-store'
 
-const firstNames = Trie.fromArray(
-  JSON.parse(readFileSync('firstNames.json').toString('utf8'))
-)
+// const firstNames = Trie.fromArray(
+//   JSON.parse(readFileSync('firstNames.json').toString('utf8'))
+// )
 const lastNames = Trie.fromArray(
   JSON.parse(readFileSync('lastNames.json').toString('utf8'))
 )

@@ -36,5 +36,5 @@ export const typos = {
   9: 'oip80i0',
   0: 'p+0å+o',
   '+': 'åp¨åp0',
-  ' ': 'nvcmxb x',
+  ' ': ' ',
 }

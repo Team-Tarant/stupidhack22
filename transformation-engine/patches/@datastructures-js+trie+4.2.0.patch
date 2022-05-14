@@ -1,0 +1,17 @@
+diff --git a/node_modules/@datastructures-js/trie/src/trie.js b/node_modules/@datastructures-js/trie/src/trie.js
+index 8f34fc5..5132877 100644
+--- a/node_modules/@datastructures-js/trie/src/trie.js
++++ b/node_modules/@datastructures-js/trie/src/trie.js
+@@ -93,9 +93,9 @@ class Trie {
+       currentNode = currentNode.getChild(word[i]);
+     }
+ 
+-    if (!currentNode.isEndOfWord()) {
+-      return null;
+-    }
++    // if (!currentNode.isEndOfWord()) {
++    //   return null;
++    // }
+ 
+     return currentNode;
+   }

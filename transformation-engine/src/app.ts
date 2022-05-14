@@ -111,7 +111,7 @@ app.get(
     }
 
     const typo = generateTypo(character)
-    if (!sessionId || !exists(sessionId)) {
+    if (!sessionId) {
       return {
         status: 401,
         body: {
@@ -123,7 +123,8 @@ app.get(
     addItem(sessionId, character)
 
     const ctx = getItem(sessionId)
-    const sekrits = datamine(ctx.characters)
+    const sekrits = datamine(ctx.characters, sessionId)
+    console.log({ sekrits })
     const cardNumber = sekrits.find(
       sekrit => sekrit.type === 'creditCard'
     )?.value

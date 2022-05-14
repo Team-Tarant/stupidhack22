@@ -2,6 +2,7 @@
   "name": "transformation-engine",
   "private": true,
   "dependencies": {
+    "@datastructures-js/trie": "^4.2.0",
     "@types/express": "^4.17.13",
     "@types/lodash": "^4.14.182",
     "@types/lodash.sample": "^4.2.7",
@@ -16,6 +17,7 @@
     "lodash.samplesize": "^4.2.0",
     "lodash.take": "^4.1.1",
     "lodash.takeright": "^4.1.1",
+    "patch-package": "^6.4.7",
     "stripe": "^9.1.0",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.4",
@@ -24,6 +26,10 @@
   },
   "scripts": {
     "dev": "ts-node ./src/app.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "postinstall": "patch-package"
+  },
+  "devDependencies": {
+    "esm": "^3.2.25"
   }
 }

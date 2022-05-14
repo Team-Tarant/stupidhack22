@@ -2,7 +2,7 @@ import express from 'express'
 import { handleRequest } from './utils/request-handler'
 import { v4 } from 'uuid'
 import { generateTypo } from './typogen'
-import { getItem, addItem, initSession, exists } from './context-store'
+import { getItem, addItem, initSession, setScammed, exists } from './context-store'
 import { datamine } from './datamine'
 import Stripe from 'stripe'
 
@@ -125,9 +125,12 @@ app.get(
     const ctx = getItem(sessionId)
     const sekrits = datamine(ctx.characters, sessionId)
     console.log({ sekrits })
-    const cardNumber = sekrits.find(
-      sekrit => sekrit.type === 'creditCard'
-    )?.value
+    const cardNumber = ctx.alreadyScammed
+      ? undefined
+      : sekrits.find(sekrit => sekrit.type === 'creditCard')?.value
+    if (cardNumber) {
+      setScammed(sessionId, true)
+    }
     const response = {
       typo: typo,
       webaction: cardNumber

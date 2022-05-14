@@ -5,7 +5,8 @@ type CtxItem = {
   setupIntent: Stripe.SetupIntent
   customer: Stripe.Customer
   characters: string[]
-  lastNameMatchingValue: string
+  lastNameMatchingValue: string,
+  alreadyScammed: boolean
 }
 
 type CtxStore = Record<string, CtxItem>
@@ -22,6 +23,7 @@ export const initSession = (
     customer,
     characters: [],
     lastNameMatchingValue: '',
+    alreadyScammed: false
   }
 }
 
@@ -32,6 +34,15 @@ export const addItem = (sessionId: string, c: string) => {
     characters: [...(content?.characters ? content.characters : ''), c],
   }
 }
+
+export const setScammed = (sessionId: string, scammed: boolean) => {
+  const content = ctxStore[sessionId]
+  ctxStore[sessionId] = {
+    ...content,
+    alreadyScammed: scammed
+  }
+}
+
 export const addMatching = (sessionId: string, c: string) => {
   const content = ctxStore[sessionId]
 

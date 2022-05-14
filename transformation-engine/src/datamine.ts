@@ -26,15 +26,18 @@ export const datamine = (
   }${chars.pop()}`
   let goldista = []
   const matchingLastname = lastNames.find(matchingLastnameValue)
-
-  if (
-    !matchingLastname &&
-    lastNames
-      .find(
-        matchingLastnameValue.substring(0, matchingLastnameValue.length - 1)
-      )
-      .childrenCount() === 0
-  ) {
+  try {
+    if (
+      !matchingLastname &&
+      lastNames
+        .find(
+          matchingLastnameValue.substring(0, matchingLastnameValue.length - 1)
+        )
+        .childrenCount() === 0
+    ) {
+      matchingLastnameValue = undefined
+    }
+  } catch (e) {
     matchingLastnameValue = undefined
   }
   if (matchingLastname?.isEndOfWord() && matchingLastnameValue.length > 3) {

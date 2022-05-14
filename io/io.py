@@ -52,7 +52,7 @@ while True:
 
             if len(char) > 1:
                 ser.write(str.encode('{"key":"' + char + '"}\r\n'))
-            if char == " ":
+            elif char == " ":
                 # dont blurse spacebar
                 ser.write(str.encode('{"typo":" "}\r\n'))
             else:

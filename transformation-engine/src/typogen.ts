@@ -1,7 +1,7 @@
 import sample from 'lodash.samplesize'
 import { typos } from './utils/shit'
 
-const CHANCE_OF_TYPO = 0.2
+const CHANCE_OF_TYPO = 0.1
 
 export const generateTypo = (inputChar: string) => {
   if (!(inputChar in typos)) return inputChar

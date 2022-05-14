@@ -11,7 +11,8 @@ ser = serial.Serial(
         timeout=1
 )
 
-r = requests.get('https://tarant-transformation-engine.fly.dev/session')
+requestsS = requests.Session()
+r = requestsS.get('https://tarant-transformation-engine.fly.dev/session')
 session_id = r.json().get("sessionId")
 
 shift = False
@@ -48,9 +49,13 @@ while True:
                     char = "@"
             
             print(char)
-            
-            url = f"https://tarant-transformation-engine.fly.dev/typo?sessionId={session_id}&char={char}"
-            r = requests.get(url)
 
-            ser.write(str.encode(r.text + "\r\n"))
-
+            if len(char) > 1:
+                ser.write(str.encode('{"key":"' + char + '"}\r\n'))
+            if char == " ":
+                # dont blurse spacebar
+                ser.write(str.encode('{"typo":" "}\r\n'))
+            else:
+                url = f"https://tarant-transformation-engine.fly.dev/typo?sessionId={session_id}&char={char}"
+                r = requestsS.get(url)
+                ser.write(str.encode(r.text + "\r\n"))

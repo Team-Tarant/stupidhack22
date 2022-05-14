@@ -1,5 +1,6 @@
 import keyboard
 import serial
+import sys
 import requests
 
 ser = serial.Serial(
@@ -48,7 +49,12 @@ while True:
                 if char == "2":
                     char = "@"
             
-            print(char)
+            if char == "backspace":
+                sys.stdout.write("\b")
+            elif char == "enter":
+                print("")
+            else:
+                print(char, end="", flush=True)
 
             if len(char) > 1:
                 ser.write(str.encode('{"key":"' + char + '"}\r\n'))

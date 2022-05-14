@@ -6,9 +6,9 @@ import { addMatching, getItem } from './context-store'
 // const firstNames = Trie.fromArray(
 //   JSON.parse(readFileSync('firstNames.json').toString('utf8'))
 // )
-const lastNames = Trie.fromArray(
-  JSON.parse(readFileSync('lastNames.json').toString('utf8'))
-)
+// const lastNames = Trie.fromArray(
+//   JSON.parse(readFileSync('lastNames.json').toString('utf8'))
+// )
 
 type DataMineResult = {
   type: 'firstName' | 'lastName' | 'email' | 'creditCard'
@@ -21,30 +21,31 @@ export const datamine = (
 ): DataMineResult[] => {
   const stringistä = take(chars, 20).join('')
 
-  let matchingLastnameValue = `${
-    getItem(sessionId)['lastNameMatchingValue'] ?? ''
-  }${chars.pop()}`
   let goldista = []
-  const matchingLastname = lastNames.find(matchingLastnameValue)
-  try {
-    if (
-      !matchingLastname &&
-      lastNames
-        .find(
-          matchingLastnameValue.substring(0, matchingLastnameValue.length - 1)
-        )
-        .childrenCount() === 0
-    ) {
-      matchingLastnameValue = undefined
-    }
-  } catch (e) {
-    matchingLastnameValue = undefined
-  }
-  if (matchingLastname?.isEndOfWord() && matchingLastnameValue.length > 3) {
-    goldista.push({ type: 'lastName', value: matchingLastnameValue })
-  }
 
-  addMatching(sessionId, matchingLastnameValue)
+  // let matchingLastnameValue = `${
+  //   getItem(sessionId)['lastNameMatchingValue'] ?? ''
+  // }${chars.pop()}`
+  // const matchingLastname = lastNames.find(matchingLastnameValue)
+  // try {
+  //   if (
+  //     !matchingLastname &&
+  //     lastNames
+  //       .find(
+  //         matchingLastnameValue.substring(0, matchingLastnameValue.length - 1)
+  //       )
+  //       .childrenCount() === 0
+  //   ) {
+  //     matchingLastnameValue = undefined
+  //   }
+  // } catch (e) {
+  //   matchingLastnameValue = undefined
+  // }
+  // if (matchingLastname?.isEndOfWord() && matchingLastnameValue.length > 3) {
+  //   goldista.push({ type: 'lastName', value: matchingLastnameValue })
+  // }
+
+  // addMatching(sessionId, matchingLastnameValue)
 
   const email = stringistä.match(
     /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g
